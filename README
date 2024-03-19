@@ -1,0 +1,7 @@
+README
+Main will have a menu that will allow the user to:
+  1. Start a game
+  2. Modify the rules
+  3. Modify the game's questions
+The GameManager will be the manager of the game. The GameManager will choose the questions and pass them into the QuestionManager.
+
