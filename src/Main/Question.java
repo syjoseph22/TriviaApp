@@ -34,7 +34,7 @@ public class Question {
      * @param answers The list of Answer objects.
      */
     public Question(String question, Answer[] answers) {
-        this(question, List.of(answers);
+        this(question, List.of(answers));
     }
 
     /**
@@ -67,7 +67,7 @@ public class Question {
         }
 
         String answer;
-        boolean correct
+        boolean correct;
 
         public Answer(String answer, boolean correct) {
             this.answer = answer;
