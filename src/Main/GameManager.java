@@ -1,9 +1,9 @@
 package Main;
 
 public class GameManager {
-    QuestionManager questionManager;
-
+    Queue<Question> questions;
     public GameManager() {
 
     }
+    
 }
