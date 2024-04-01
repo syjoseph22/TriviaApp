@@ -10,12 +10,17 @@ public class Question {
     /**
      * The question to be displayed to the user.
      */
-    String question;
+    private String question;
 
     /**
      * The different answers they will be given.
      */
-    List<Answer> answers;
+    private List<Answer> answers;
+
+    /**
+     * Difficulty from 1-10
+     */
+    private int difficulty = 0;
 
     /**
      * Constructor using already made list of Answer objects.
@@ -59,6 +64,16 @@ public class Question {
         this(List.of(qAndAs), correctAnswer);
     }
 
+    public void setDifficulty(int difficulty) {
+        if (difficulty > 0 && difficulty <= 10)
+            this.difficulty = difficulty;
+
+        throw new IllegalArgumentException("Only from 1 to 10 is allowed");
+    }
+
+    public boolean isRated() {
+        return difficulty != 0;
+    }
 
     public class Answer {
         enum category {
