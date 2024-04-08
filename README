@@ -7,6 +7,13 @@ Main will have a menu that will allow the user to:
 Main will initialize a GameManager object.
 The GameManager will be the manager of the game. The GameManager will choose the Questions to use for this game and pass them into the QuestionManager.
 
+Main:
+Allows you to 1. Start a new game. 2. Modify the question list.
+
 GameManager:
 
 
+QuestionManager:
+The job of the question manager is to supply the questions for a specific game. If the game is on a specific difficulty, the Question Manager will only return questions of that difficulty.
+
+Tasks:
