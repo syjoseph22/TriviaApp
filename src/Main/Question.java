@@ -115,6 +115,7 @@ public class Question {
         return temp;
     }
 
-
-
+    public int getDifficulty() {
+        return difficulty;
+    }
 }
