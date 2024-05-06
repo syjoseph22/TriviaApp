@@ -8,6 +8,7 @@ import java.util.*;
 
 public class QuestionManager {
     ArrayList<Question> questions;
+    private static int pointer=0;
     public QuestionManager() {
         this.questions = new ArrayList<>();
     }
@@ -21,9 +22,9 @@ public class QuestionManager {
             database.nextLine();
         }
     }
+
     private List<String> getQandAs(Scanner o){
-        List<String> answers = new ArrayList<>() {
-        };
+        List<String> answers = new ArrayList<>();
         for(int i =0; i<5;i++)
             answers.add(o.nextLine());
         return answers;
@@ -39,5 +40,23 @@ public class QuestionManager {
             }
         }
         storageFile.close();
+    }
+    public void addQuestion(String[] qAndas,int correctPointer,int rating){
+        questions.add(new Question(qAndas,correctPointer));
+        questions.get(questions.size()-1).setDifficulty(rating);
+    }
+    public Question getQuestion(){
+        if(pointer>questions.size()-1)
+            throw new IndexOutOfBoundsException();
+        return questions.get(pointer++);
+    }
+    public Question getRatedQuestion(int difficultyRating){
+        if(pointer>questions.size()-1)
+            throw new IndexOutOfBoundsException();
+        while(!(pointer>questions.size()-1)){
+            if (questions.get(pointer++).getDifficulty()==difficultyRating)
+                return questions.get(pointer-1);
+        }
+            throw new NoSuchElementException();
     }
 }
