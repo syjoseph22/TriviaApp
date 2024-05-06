@@ -3,7 +3,6 @@ package Main;
 import java.util.Queue;
 
 public class GameManager {
-
     QuestionManager questionManager;
 
 

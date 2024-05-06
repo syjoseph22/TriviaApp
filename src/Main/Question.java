@@ -48,7 +48,7 @@ public class Question {
      * @param correctAnswer The index of which String should be put in as the correct answer.
      */
     public Question(List<String> qAndAs, int correctAnswer) {
-        this.question = qAndAs.getFirst();
+        this.question = qAndAs.get(0);
         answers = new ArrayList<>();
         for (int i = 1; i < qAndAs.size(); i++) {
             answers.add(new Answer(qAndAs.get(i), i == correctAnswer));
@@ -101,6 +101,18 @@ public class Question {
             return correct;
         }
 
+    }
+    public List<String> dataDump() {
+        List<String> temp = new ArrayList<>();
+        Integer correct=0;
+        temp.add(question);
+        for(int i =0;i<answers.size();i++){
+            if(answers.get(i).isCorrect())
+                correct=i+1;
+            temp.add(answers.get(i).answer);
+        }
+        temp.add(correct.toString());
+        return temp;
     }
 
 
