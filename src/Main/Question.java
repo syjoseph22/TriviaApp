@@ -67,8 +67,8 @@ public class Question {
     public void setDifficulty(int difficulty) {
         if (difficulty > 0 && difficulty <= 10)
             this.difficulty = difficulty;
-
-        throw new IllegalArgumentException("Only from 1 to 10 is allowed");
+        else
+            throw new IllegalArgumentException("Only from 1 to 10 is allowed");
     }
 
     public boolean isRated() {

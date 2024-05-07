@@ -12,8 +12,13 @@ public class QuestionManager {
     public QuestionManager() {
         this.questions = new ArrayList<>();
     }
-    public QuestionManager(File file) throws FileNotFoundException {
-        this();
+    private List<String> getQandAs(Scanner o){
+        List<String> answers = new ArrayList<>();
+        for(int i =0; i<5;i++)
+            answers.add(o.nextLine());
+        return answers;
+    }
+    public void loadQuestionsFromFile(File file) throws FileNotFoundException {
         if(!file.exists())
             throw new FileNotFoundException();
         Scanner database = new Scanner(file);
@@ -21,13 +26,6 @@ public class QuestionManager {
             questions.add(new Question(getQandAs(database),database.nextInt()));
             database.nextLine();
         }
-    }
-
-    private List<String> getQandAs(Scanner o){
-        List<String> answers = new ArrayList<>();
-        for(int i =0; i<5;i++)
-            answers.add(o.nextLine());
-        return answers;
     }
     public void storeQuestions(String fileLocation) throws IOException {
         FileWriter storageFile = new FileWriter(fileLocation);
