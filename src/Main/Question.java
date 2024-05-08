@@ -1,8 +1,6 @@
 package Main;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Question {
 
@@ -65,7 +63,7 @@ public class Question {
     }
 
     public void setDifficulty(int difficulty) {
-        if (difficulty > 0 && difficulty <= 10)
+        if (difficulty >= 0 && difficulty <= 10)
             this.difficulty = difficulty;
         else
             throw new IllegalArgumentException("Only from 1 to 10 is allowed");
@@ -117,5 +115,24 @@ public class Question {
 
     public int getDifficulty() {
         return difficulty;
+    }
+    public String getQuestion(){
+        return question;
+    }
+    public String getRightAnswer(){
+        for(Answer a:answers){
+            if(a.isCorrect())
+                return a.answer;
+        }
+        throw new NoSuchElementException();
+    }
+    public String[] getFillerAnswers(){
+        String[] fillerAnswers = new String[3];
+        for(int i=0;i<answers.size()-1;i++){
+            if(!answers.get(i).isCorrect())
+                for(int j=0;j<3;j++)
+                    fillerAnswers[j]=(answers.get(i).answer.toString());
+        }
+        return fillerAnswers;
     }
 }

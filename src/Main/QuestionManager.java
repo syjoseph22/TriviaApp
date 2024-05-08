@@ -18,17 +18,15 @@ public class QuestionManager {
             answers.add(o.nextLine());
         return answers;
     }
-    public void loadQuestionsFromFile(File file) throws FileNotFoundException {
-        if(!file.exists())
-            throw new FileNotFoundException();
-        Scanner database = new Scanner(file);
+    public void loadQuestionsFromFile(File fileLocation) throws FileNotFoundException {
+        Scanner database = new Scanner(fileLocation);
         while (database.hasNext()){
             questions.add(new Question(getQandAs(database),database.nextInt()));
             database.nextLine();
         }
     }
-    public void storeQuestions(String fileLocation) throws IOException {
-        FileWriter storageFile = new FileWriter(fileLocation);
+    public boolean storeQuestions(String fileLocation) throws IOException {
+        FileWriter storageFile=new FileWriter(fileLocation);
         List<String> qAndaList;
         for(int i =0;i<questions.size();i++){
             qAndaList = questions.get(i).dataDump();
@@ -38,6 +36,8 @@ public class QuestionManager {
             }
         }
         storageFile.close();
+        File file = new File(fileLocation);
+        return file.exists();
     }
     public void addQuestion(String[] qAndas,int correctPointer,int rating){
         questions.add(new Question(qAndas,correctPointer));
@@ -57,4 +57,29 @@ public class QuestionManager {
         }
             throw new NoSuchElementException();
     }
+    public List<String> getQuestionsAndAnswers(){
+        List<String> allQuestionsAndAnswers = new ArrayList<>();
+        for (int i=0;i<questions.size();i++) {
+            allQuestionsAndAnswers.add("Question Number "+(i+1)+"\nQuestion: "+questions.get(i).getQuestion());
+            allQuestionsAndAnswers.add("Right Answer: "+questions.get(i).getRightAnswer());
+            for (String answers:questions.get(i).getFillerAnswers())
+                allQuestionsAndAnswers.add("Filler: "+answers);
+        }
+        return allQuestionsAndAnswers;
+    }
+    public void removeQuestion(int questionNumber){
+        questions.remove(questionNumber-1);
+    }
+//    public List<String> dataDump() {
+//        List<String> temp = new ArrayList<>();
+//        Integer correct=0;
+//        temp.add(question);
+//        for(int i =0;i<answers.size();i++){
+//            if(answers.get(i).isCorrect())
+//                correct=i+1;
+//            temp.add(answers.get(i).answer);
+//        }
+//        temp.add(correct.toString());
+//        return temp;
+//    }
 }

@@ -1,9 +1,9 @@
 package Main;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Queue;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -16,9 +16,9 @@ public class Main {
             System.out.println("Please select one of the following options.");
             System.out.println("1) Start a game.\n2) Modify the rules.\n3) Modify the game's questions.\n4) Quit.");
             int userChoice=dataValidation(4);
-            quit=userChoice<0?false:menuSelect(userChoice);
+            quit=userChoice<1?false:menuSelect(userChoice);
         }while (!quit);
-        System.out.println("Hello world!");
+        System.out.println("Thanks for playing.");
     }
     public static int dataValidation(int availableOptions){
         int userChoice=-1;
@@ -34,7 +34,7 @@ public class Main {
         return userChoice;
     }
 
-    private static boolean menuSelect(int userChoice) throws FileNotFoundException {
+    private static boolean menuSelect(int userChoice) throws IOException {
         switch (userChoice){
             case 1:
                 break;
@@ -49,22 +49,28 @@ public class Main {
         }
         return false;
     }
-    public static void modifyQuestions() throws FileNotFoundException {
+    public static void modifyQuestions() throws IOException {
         System.out.println("Please select one of the following:");
-        System.out.println("1) Add a question.\n2) Load a list of questions in from a files.\n3) Save the questions to a file.\n4) Remove a question.");
-        int userChoice=dataValidation(4);
+        System.out.println("1) Add a question.\n2) Load a list of questions in from a files.\n3) Save the questions to a file.\n4) List questions\n5) Remove a question.");
+        int userChoice=dataValidation(5);
         switch (userChoice){
             case 1:
                 addQuestion();
                 break;
             case 2:
-                System.out.println("Please enter the file location.");
-                File file = new File(keyboard.nextLine());
-                questions.loadQuestionsFromFile(file);
+                questions.loadQuestionsFromFile(getAddressForFileFromUser());
                 break;
             case 3:
+                writeQuestionsToFile();
                 break;
             case 4:
+                List<String> allQandAs = questions.getQuestionsAndAnswers();
+                for(String s: allQandAs)
+                    System.out.println(s);
+                break;
+            case 5:
+                System.out.println("Please enter the question number you would like to remove.");
+                questions.removeQuestion(dataValidation(questions.questions.size()));
                 break;
         }
     }
@@ -84,7 +90,30 @@ public class Main {
                 System.out.println("Input is invalid.");
             System.out.println("Please enter difficulty rating between 1 and 10. Enter 11 for non-rated questions");
             rating=dataValidation(11);
+            rating=rating==11?0:rating;
         }while (rating==-1);
         questions.addQuestion(qAndas,1,rating);
+    }
+    private static File getAddressForFileFromUser(){
+        boolean realFile=true;
+        File fileLocation;
+        do {
+            System.out.println("Please enter the file address.");
+            fileLocation = new File(keyboard.nextLine());
+            if (!fileLocation.exists()) {
+                System.out.println("There is an issue with the file address. Please try again.");
+                realFile=false;
+            }
+        }while (!realFile);
+        return fileLocation;
+    }
+    private static void writeQuestionsToFile() throws IOException {
+        boolean addressValid;
+         do {
+            System.out.println("Please enter a address for the storage file.");
+            addressValid = questions.storeQuestions(keyboard.nextLine());
+            if (!addressValid)
+                System.out.println("There is an issue with the address. Please try again.");
+        }while (!addressValid);
     }
 }
