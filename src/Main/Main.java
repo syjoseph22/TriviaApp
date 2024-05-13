@@ -1,7 +1,6 @@
 package Main;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
@@ -9,7 +8,7 @@ import java.util.Scanner;
 public class Main {
     static Scanner keyboard = new Scanner(System.in);
     static QuestionManager questions = new QuestionManager();
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         boolean quit=false;
         System.out.println("Welcome to the game.");
         do{
@@ -21,7 +20,7 @@ public class Main {
         System.out.println("Thanks for playing.");
     }
     public static int dataValidation(int availableOptions){
-        int userChoice=-1;
+        int userChoice = -1;
         try {
             userChoice=keyboard.nextInt();
             keyboard.nextLine();
@@ -30,11 +29,11 @@ public class Main {
             return -1;
         }
         if((userChoice<=0)||(userChoice>availableOptions))
-            userChoice=-1;
+            userChoice = -1;
         return userChoice;
     }
 
-    private static boolean menuSelect(int userChoice) throws IOException {
+    private static boolean menuSelect(int userChoice) {
         switch (userChoice){
             case 1:
                 break;
@@ -49,16 +48,18 @@ public class Main {
         }
         return false;
     }
-    public static void modifyQuestions() throws IOException {
+    public static void modifyQuestions() {
         System.out.println("Please select one of the following:");
-        System.out.println("1) Add a question.\n2) Load a list of questions in from a files.\n3) Save the questions to a file.\n4) List questions\n5) Remove a question.");
+        System.out.println("1) Add a question.\n2) Load a list of questions in from a files." +
+                "\n3) Save the questions to a file.\n4) List questions\n5) Remove a question.");
         int userChoice=dataValidation(5);
         switch (userChoice){
             case 1:
                 addQuestion();
                 break;
             case 2:
-                questions.loadQuestionsFromFile(getAddressForFileFromUser());
+                if(!questions.loadQuestionsFromFile(getAddressForFileFromUser()))
+                    System.out.println("There was a error writing to the file.");
                 break;
             case 3:
                 writeQuestionsToFile();
@@ -96,24 +97,35 @@ public class Main {
     }
     private static File getAddressForFileFromUser(){
         boolean realFile=true;
-        File fileLocation;
+        File fileLocation = null;
         do {
             System.out.println("Please enter the file address.");
-            fileLocation = new File(keyboard.nextLine());
-            if (!fileLocation.exists()) {
+            try {
+                fileLocation = new File(keyboard.nextLine());
+                fileLocation.canRead();
+            }
+            catch (Exception e) {
                 System.out.println("There is an issue with the file address. Please try again.");
                 realFile=false;
             }
         }while (!realFile);
         return fileLocation;
     }
-    private static void writeQuestionsToFile() throws IOException {
-        boolean addressValid;
+    private static void writeQuestionsToFile() {
+        boolean addressValid=true;
+        File fileLocation=null;
          do {
-            System.out.println("Please enter a address for the storage file.");
-            addressValid = questions.storeQuestions(keyboard.nextLine());
-            if (!addressValid)
-                System.out.println("There is an issue with the address. Please try again.");
+            System.out.println("Please enter a address for the file location.");
+            try {
+                fileLocation=new File(keyboard.nextLine());
+                fileLocation.canWrite();
+            }
+            catch (Exception e){
+                System.out.println("Can't write to that location.");
+                addressValid=false;
+            }
+            if (addressValid)
+                addressValid = questions.storeQuestions(fileLocation);
         }while (!addressValid);
     }
 }

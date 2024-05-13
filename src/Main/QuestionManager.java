@@ -18,26 +18,39 @@ public class QuestionManager {
             answers.add(o.nextLine());
         return answers;
     }
-    public void loadQuestionsFromFile(File fileLocation) throws FileNotFoundException {
-        Scanner database = new Scanner(fileLocation);
-        while (database.hasNext()){
-            questions.add(new Question(getQandAs(database),database.nextInt()));
+    public boolean loadQuestionsFromFile(File fileLocation) {
+        Scanner database;
+        try {
+            database = new Scanner(fileLocation);
+        }
+        catch (FileNotFoundException e){
+            return false;
+        }
+        while (database.hasNext()) {
+            questions.add(new Question(getQandAs(database), database.nextInt()));
             database.nextLine();
         }
+        return true;
     }
-    public boolean storeQuestions(String fileLocation) throws IOException {
-        FileWriter storageFile=new FileWriter(fileLocation);
-        List<String> qAndaList;
-        for(int i =0;i<questions.size();i++){
-            qAndaList = questions.get(i).dataDump();
-            Iterator<String> qAndaInter = qAndaList.iterator();
-            while (qAndaInter.hasNext()){
-                storageFile.write(qAndaInter.next()+"\n");
+    public boolean storeQuestions(File fileLocation) {
+        FileWriter storageFile;
+        try{
+            storageFile=new FileWriter(fileLocation);
+            List<String> qAndaList;
+            for(int i =0;i<questions.size();i++){
+                qAndaList = questions.get(i).dataDump();
+                Iterator<String> qAndaInter = qAndaList.iterator();
+                while (qAndaInter.hasNext()){
+                    storageFile.write(qAndaInter.next()+"\n");
+                }
             }
+            storageFile.close();
         }
-        storageFile.close();
-        File file = new File(fileLocation);
-        return file.exists();
+        catch (Exception e){
+            System.out.println("There was an error writing to the file.");
+            return false;
+        }
+        return true;
     }
     public void addQuestion(String[] qAndas,int correctPointer,int rating){
         questions.add(new Question(qAndas,correctPointer));
