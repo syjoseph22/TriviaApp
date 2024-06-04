@@ -19,16 +19,32 @@ public class QuestionManager {
 
     // This constructor takes a file and compiles it into a list of Question objects.
     // The file must be formatted in a way the code understands.
-    // TODO Specify the format here as a comment
+    // The format is as follows:
+    // The question,
+    // the correct answer,
+    // three false answers,
+    // the number 1,
+    // and the difficulty rating
     public QuestionManager(File file) throws FileNotFoundException {
         this();
         if(!file.exists())
             throw new FileNotFoundException();
         Scanner database = new Scanner(file);
         while (database.hasNext()){
-            questions.add(new Question(getQandAs(database),database.nextInt()));
-            while (database.hasNext())
-                database.nextLine();
+            // Get the next question
+            String q = database.nextLine();
+
+            // Get all the answers, only the first answer is correct
+            List<Answer> answers = new ArrayList<>();
+            for(int i =0; i < 4; i++) {
+                answers.add(new Answer(database.nextLine(), i == 0));
+            }
+
+            // Get the difficulty
+            int diff = database.nextInt();
+
+            // Construct the question object and add it to the list
+            questions.add(new Question(q, answers, diff));
         }
     }
 

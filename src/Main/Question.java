@@ -67,6 +67,7 @@ public class Question {
         }
     }
 
+
     /**
      * Constructor using an array of Strings including both the question and the answers.
      * @param qAndAs The array of strings with the info.
@@ -87,33 +88,7 @@ public class Question {
         return difficulty != 0;
     }
 
-    public class Answer {
-        enum category {
-            WrongAnswer,
-            RightAnswer
-        }
 
-        String answer;
-        boolean correct;
-
-        public Answer(String answer, boolean correct) {
-            this.answer = answer;
-            this.correct = correct;
-        }
-
-
-        public void setAsCorrect() {
-            correct = true;
-        }
-        public void setAsIncorrect() {
-            correct = false;
-        }
-
-        public boolean isCorrect() {
-            return correct;
-        }
-
-    }
     public List<String> dataDump() {
         List<String> temp = new ArrayList<>();
         Integer correct=0;
