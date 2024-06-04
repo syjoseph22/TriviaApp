@@ -32,6 +32,18 @@ public class Question {
         this.answers = answers;
     }
 
+    /**
+     * Constructor using a question string, already made list of Answer objects,
+     * and a difficulty.
+     * @param question The question.
+     * @param answers The list of Answer objects.
+     * @param difficulty The difficulty level of the question
+     */
+    public Question(String question, List<Answer> answers, int difficulty) {
+        this(question, answers);
+        this.difficulty = difficulty;
+    }
+
 
     /**
      * Constructor using an array of Answer objects.
@@ -117,5 +129,15 @@ public class Question {
 
     public int getDifficulty() {
         return difficulty;
+    }
+
+    @Override
+    public String toString() {
+        return question +
+                "\nA: " + answers.get(0).answer + answers.get(0).isCorrect() +
+                "\nB: " + answers.get(1).answer + answers.get(1).isCorrect() +
+                "\nC: " + answers.get(2).answer + answers.get(2).isCorrect() +
+                "\nD: " + answers.get(3).answer + answers.get(3).isCorrect() +
+                "\nDifficulty: " + difficulty;
     }
 }

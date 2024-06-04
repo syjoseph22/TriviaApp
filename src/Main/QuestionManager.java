@@ -7,11 +7,19 @@ import java.io.IOException;
 import java.util.*;
 
 public class QuestionManager {
+    // The list of questions to ask.
     ArrayList<Question> questions;
+    // Which question we are up to.
     private static int pointer=0;
+
+    // Default constructor
     public QuestionManager() {
         this.questions = new ArrayList<>();
     }
+
+    // This constructor takes a file and compiles it into a list of Question objects.
+    // The file must be formatted in a way the code understands.
+    // TODO Specify the format here as a comment
     public QuestionManager(File file) throws FileNotFoundException {
         this();
         if(!file.exists())
@@ -19,7 +27,8 @@ public class QuestionManager {
         Scanner database = new Scanner(file);
         while (database.hasNext()){
             questions.add(new Question(getQandAs(database),database.nextInt()));
-            database.nextLine();
+            while (database.hasNext())
+                database.nextLine();
         }
     }
 
@@ -58,5 +67,9 @@ public class QuestionManager {
                 return questions.get(pointer-1);
         }
             throw new NoSuchElementException();
+    }
+
+    public List<Question> getAllQuestions() {
+        return List.copyOf(questions);
     }
 }
