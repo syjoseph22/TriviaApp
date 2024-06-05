@@ -1,5 +1,8 @@
 package Main;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class TriviaGame {
@@ -93,9 +96,45 @@ public class TriviaGame {
         System.out.println();
     }
 
-    public void modify() {
+    public void modify(String fileLocation) throws IOException {
         System.out.println("What modification would you like to make?");
         System.out.println("A. Add a question");
+
+        char inputChar;
+        while ((inputChar = input.next().charAt(0)) != 'A') {
+            System.out.println("Invalid Entry");
+        }
+        switch (inputChar) {
+            case 'A':
+                input.nextLine();
+                // Get the question
+                System.out.println("Enter the question and press enter");
+                String question = input.nextLine();
+
+                List<Answer> answers = new ArrayList<>();
+                // Get the correct answer
+                System.out.println("Enter the correct answer and press enter");
+                answers.add(new Answer(input.nextLine(), true));
+
+                // Get three incorrect answers
+                for (int i = 0; i < 3; i++) {
+                    System.out.println("Enter an incorrect answer:");
+                    answers.add(new Answer(input.nextLine(), false));
+                }
+
+                // Get the difficulty rating
+                System.out.println("Enter the difficulty rating (1 - 10 inclusive):");
+                int rating = input.nextInt();
+                while (rating < 1 || rating > 10) {
+                    System.out.println("Invalid rating.");
+                    rating = input.nextInt();
+                }
+
+                // Construct and submit the question
+                System.out.println("Storing question...");
+                manager.storeQuestion(fileLocation, new Question(question, answers, rating));
+                System.out.println("Your question has been added to the game.");
+        }
     }
 
     public void options() {
@@ -119,6 +158,5 @@ public class TriviaGame {
                 break;
         }
         // TODO Timed play option?
-        // TODO Remove ask difficulty
     }
 }

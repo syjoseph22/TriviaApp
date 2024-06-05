@@ -21,15 +21,7 @@ public class Main {
 
         // Create the game object
         TriviaGame game = new TriviaGame(manager, input);
-        // TODO remove next lines
-        List<Answer> answers = new ArrayList<>(List.of(
-                new Answer("Answer no 1. This is incorrect.", false),
-                new Answer("Answer no 2. This is correct.", true),
-                new Answer("Answer no 3. This is incorrect.", false),
-                new Answer("Answer no 4. This is incorrect.", false)
-        ));
 
-        manager.storeQuestion(fileLocation, new Question("I am adding this quesion",answers, 10));
         char menuOption;
         // Main game loop
         do {
@@ -46,7 +38,7 @@ public class Main {
                     game.play();
                     break;
                 case 'B':
-                    game.modify();
+                    game.modify(fileLocation);
                     break;
                 case 'C':
                     game.options();

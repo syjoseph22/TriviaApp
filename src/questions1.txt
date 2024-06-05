@@ -1,1 +1,132 @@
-I am adding this quesionAnswer no 2. This is correct.Answer no 1. This is incorrect.Answer no 3. This is incorrect.Answer no 4. This is incorrect.10
+How are you?
+Fantastic
+Bad
+Cranky
+Ok
+1
+Which of the following is the longest word?
+Catastrophic
+Cat
+Catastrophe
+Caterpillar
+2
+What type of animal says 'Meow'?
+Cat
+Bat
+Rat
+Mat
+3
+In which city is the Eiffel Tower located?
+Paris
+Baghdad
+Hong Kong
+El Dorado
+3
+Who won the US presidential election in 2020?
+Who knows?
+Donald Trump
+Joe Biden
+Kamala Harris
+10
+What is an ingot?
+A block of metal
+A house made of snow and ice
+Another word for a home run
+An exclamation of surprise
+4
+Who is buried in Grant's tomb?
+Grant and his wife
+Grant
+Grant's wife
+Grant's cat
+3
+Which of the following is an illegal variable name in Java?
+2ndPair
+Pair2
+Pair2Pair
+P2
+5
+What country has the oldest operating parliament in the world?
+Iceland
+Israel
+India
+Illinois
+7
+What is the definition of the word "Ultracrepidarian"?
+Someone who gives advice on a topic they have no knowledge about
+A type of spider found only in the Amazon rain forest
+A person who is exactly 88 years old
+A person who is employed at a job he is overqualified for
+9
+Which of the following is not one of the United States of America?
+Mexico
+New Mexico
+New York
+Hawaii
+2
+Which of the following is an example of a primitive type in Java?
+int
+Person
+Scanner
+List
+2
+What is the best time to go to the dentist?
+2:30
+Midnight
+Daybreak
+During work
+1
+Why did the chicken cross the road?
+Because he felt like it
+To get to the other side
+To escape
+To get some food
+1
+How many feet are in a yard?
+3
+Depends on which yard
+6
+10,301
+2
+Which of the following is located on the South American Continent?
+Uruguay
+Mexico
+Macedonia
+Russia
+4
+How many walls does a legal succah require?
+2 and a bit of a third
+3
+4
+0
+3
+Is crab kosher?
+No
+Yes
+Only if it's well done
+Depends on who you ask
+3
+How many oceans are there in the world?
+5
+7
+99
+1
+2
+How many continents are there on Earth?
+7
+5
+1
+2
+2
+Whose daughter was supposed to die on her wedding day?
+Rabbi Akiva
+Rabbi Yehuda
+Acherim
+Rabbi Gamliel
+7
+Which of the following is not one of the jewish tithes?
+Maaser Shlishi
+Maaser Sheini
+Maaser Ani
+Maaser Beheima
+4

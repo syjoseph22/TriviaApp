@@ -86,17 +86,18 @@ public class QuestionManager {
     }
 
     public void storeQuestion(String fileLocation, Question question) throws IOException {
-        try (FileWriter file = new FileWriter(fileLocation)) {
-            file.append(question.getQuestion());
-            file.append(question.correctAnswer().getAnswer());
+        try (FileWriter file = new FileWriter(fileLocation, true)) {
+            file.append(question.getQuestion() + "\n");
+            file.append(question.correctAnswer().getAnswer() + "\n");
             question.incorrectAnswers().forEach(a -> {
                 try {
-                    file.append(a.getAnswer());
+                    file.append(a.getAnswer() + "\n");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             });
-            file.append(Integer.toString(question.getDifficulty()));
+            file.append(Integer.toString(question.getDifficulty()) + "\n");
+            questions.add(question);
         }
     }
     public void addQuestion(String[] qAndas,int correctPointer,int rating){
