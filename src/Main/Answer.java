@@ -6,8 +6,20 @@ public class Answer {
         RightAnswer
     }
 
-    String answer;
-    boolean correct;
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
+    }
+
+    private String answer;
+    private boolean correct;
 
     public Answer(String answer, boolean correct) {
         this.answer = answer;
@@ -26,4 +38,8 @@ public class Answer {
         return correct;
     }
 
+    @Override
+    public String toString() {
+        return answer;
+    }
 }

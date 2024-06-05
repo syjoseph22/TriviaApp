@@ -12,9 +12,20 @@ public class QuestionManager {
     // Which question we are up to.
     private static int pointer=0;
 
+    public int getMaxDifficulty() {
+        return maxDifficulty;
+    }
+
+    public void setMaxDifficulty(int maxDifficulty) {
+        this.maxDifficulty = maxDifficulty;
+    }
+
+    int maxDifficulty;
+
     // Default constructor
     public QuestionManager() {
         this.questions = new ArrayList<>();
+        maxDifficulty = 10;
     }
 
     // This constructor takes a file and compiles it into a list of Question objects.
@@ -23,8 +34,7 @@ public class QuestionManager {
     // The question,
     // the correct answer,
     // three false answers,
-    // the number 1,
-    // and the difficulty rating
+    // the difficulty rating.
     public QuestionManager(File file) throws FileNotFoundException {
         this();
         if(!file.exists())
@@ -41,11 +51,19 @@ public class QuestionManager {
             }
 
             // Get the difficulty
-            int diff = database.nextInt();
+            int diff = Integer.parseInt(database.nextLine());
 
             // Construct the question object and add it to the list
             questions.add(new Question(q, answers, diff));
         }
+        // Shuffle the questions for randomness
+        shuffleQuestions();
+    }
+
+    // This method shuffles the questions around to maintain randomness.
+    public void shuffleQuestions() {
+        Collections.shuffle(questions);
+        pointer = 0;
     }
 
     private List<String> getQandAs(Scanner o){
@@ -66,13 +84,36 @@ public class QuestionManager {
         }
         storageFile.close();
     }
+
+    public void storeQuestion(String fileLocation, Question question) throws IOException {
+        try (FileWriter file = new FileWriter(fileLocation)) {
+            file.append(question.getQuestion());
+            file.append(question.correctAnswer().getAnswer());
+            question.incorrectAnswers().forEach(a -> {
+                try {
+                    file.append(a.getAnswer());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            file.append(Integer.toString(question.getDifficulty()));
+        }
+    }
     public void addQuestion(String[] qAndas,int correctPointer,int rating){
         questions.add(new Question(qAndas,correctPointer));
         questions.get(questions.size()-1).setDifficulty(rating);
     }
+
+    // This method returns a question that matches or is below
+    // the desired difficulty level
     public Question getQuestion(){
         if(pointer>questions.size()-1)
             throw new IndexOutOfBoundsException();
+
+        // Skip questions that are above the max difficulty
+        while (questions.get(pointer).getDifficulty() > maxDifficulty)
+            pointer++;
+
         return questions.get(pointer++);
     }
     public Question getRatedQuestion(int difficultyRating){
@@ -88,4 +129,6 @@ public class QuestionManager {
     public List<Question> getAllQuestions() {
         return List.copyOf(questions);
     }
+
+
 }

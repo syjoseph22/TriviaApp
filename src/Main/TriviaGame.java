@@ -1,0 +1,124 @@
+package Main;
+
+import java.util.Scanner;
+
+public class TriviaGame {
+    private static final int EASY_DIFFICULTY_CAP = 3;
+    private static final int MEDIUM_DIFFICULTY_CAP = 7;
+    private static final int HARD_DIFFICULTY_CAP = 10;
+
+    QuestionManager manager;
+    Scanner input;
+
+    private boolean askDifficulty = true;
+    private boolean timedPlay = true;
+    public TriviaGame(QuestionManager manager, Scanner input) {
+        this.manager = manager;
+        this.input = input;
+    }
+
+    public void play() {
+        if (askDifficulty) {
+            // Get the desired difficulty setting
+            System.out.println("Select the difficulty level:");
+            System.out.println("A. Easy\nB. Medium\nC. Hard");
+            boolean valid = false;
+            while (!valid) {
+                switch (input.next().charAt(0)) {
+                    case 'A':
+                        manager.setMaxDifficulty(EASY_DIFFICULTY_CAP);
+                        valid = true;
+                        break;
+                    case 'B':
+                        manager.setMaxDifficulty(MEDIUM_DIFFICULTY_CAP);
+                        valid = true;
+                        break;
+                    case 'C':
+                        manager.setMaxDifficulty(HARD_DIFFICULTY_CAP);
+                        valid = true;
+                        break;
+                    default:
+                        System.out.println("Invalid entry");
+                }
+            }
+        } else {
+            // Default difficulty is max
+            manager.setMaxDifficulty(HARD_DIFFICULTY_CAP);
+        }
+
+        // Ask 10 questions with the desired difficulty
+        manager.shuffleQuestions();
+        Question question;
+        int points = 0;
+        boolean timesUp = false;
+
+        for (int i = 0; i < 10; i++) {
+            System.out.println();
+            System.out.println("--- Question " + (i+1) + ": ---");
+            question = manager.getQuestion();
+            // Display the chosen question
+            System.out.println(question);
+
+            // Get the user's answer
+            char answerChar = input.next().charAt(0);
+            while (answerChar != 'A' && answerChar != 'B' && answerChar != 'C' && answerChar != 'D') {
+                System.out.println("Invalid entry. Please try again.");
+                answerChar = input.next().charAt(0);
+            }
+
+            // Determine if the answer was correct and assign a point if it was
+            if (question.isCorrectAnswer(answerChar)) {
+                System.out.println("Correct!");
+                points++;
+            } else {
+                System.out.println("Wrong answer.");
+                System.out.println(question.correctAnswer());
+            }
+        }
+
+        // After the ten questions have been asked, display the results
+        System.out.println();
+        if (points == 10) {
+            System.out.println("You got 10/10 questions right! You must be a genius.");
+        } else if (points > 7) {
+            System.out.println("Nice! You got " + points + "/10 right!");
+        } else if (points > 3) {
+            System.out.println(points + "/10 is decent. Could be better though.");
+        } else if (points > 0) {
+            System.out.println("Only " + points + "/10 ? That's a terrible score!");
+        } else {
+            System.out.println("Literally not a single answer was correct. Go read a book.");
+        }
+        System.out.println();
+        System.out.println();
+    }
+
+    public void modify() {
+        System.out.println("What modification would you like to make?");
+        System.out.println("A. Add a question");
+    }
+
+    public void options() {
+        System.out.println("Options menu");
+        System.out.println("A. Toggle Default difficulty");
+        System.out.println("A. Toggle Timed play");
+        System.out.println("B. Exit");
+        char inputChar;
+        while ((inputChar = input.next().charAt(0)) != 'A' && inputChar != 'B') {
+            System.out.println("Invalid Entry");
+        }
+        switch (inputChar) {
+            case 'A':
+                askDifficulty = !askDifficulty;
+                System.out.println("The game will " + (askDifficulty ? "" : "not ") + "request a difficulty level.");
+                break;
+            case 'B':
+                timedPlay = !timedPlay;
+                System.out.println("Timer is " + (timedPlay ? "en" : "dis") + "abled.");
+            default:
+                break;
+        }
+        // TODO Timed play option?
+        // TODO Remove ask difficulty
+    }
+}

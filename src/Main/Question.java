@@ -1,8 +1,6 @@
 package Main;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Question {
 
@@ -96,7 +94,7 @@ public class Question {
         for(int i =0;i<answers.size();i++){
             if(answers.get(i).isCorrect())
                 correct=i+1;
-            temp.add(answers.get(i).answer);
+            temp.add(answers.get(i).getAnswer());
         }
         temp.add(correct.toString());
         return temp;
@@ -106,13 +104,38 @@ public class Question {
         return difficulty;
     }
 
+    public String getQuestion() {
+        return question;
+    }
+
+    // This method takes a char and outputs whether this is
+    // the correct answer.
+    public boolean isCorrectAnswer(char answerChar) {
+        int answerIndex = switch (answerChar) {
+            case 'A' -> 0;
+            case 'B' -> 1;
+            case 'C' -> 2;
+            case 'D' -> 3;
+            default -> throw new IllegalArgumentException();
+        };
+        return answers.get(answerIndex).isCorrect();
+    }
+
+    public Answer correctAnswer() {
+       return answers.stream().filter(a -> a.isCorrect()).findFirst().get();
+    }
+
+    public List<Answer> incorrectAnswers() {
+        return answers.stream().filter(a -> !a.isCorrect()).toList();
+    }
+
     @Override
     public String toString() {
-        return question +
-                "\nA: " + answers.get(0).answer + answers.get(0).isCorrect() +
-                "\nB: " + answers.get(1).answer + answers.get(1).isCorrect() +
-                "\nC: " + answers.get(2).answer + answers.get(2).isCorrect() +
-                "\nD: " + answers.get(3).answer + answers.get(3).isCorrect() +
-                "\nDifficulty: " + difficulty;
+        Collections.shuffle(answers);
+        return "Difficulty level: " + getDifficulty() + "\n" + question +
+                "\nA: " + answers.get(0).getAnswer() +
+                "\nB: " + answers.get(1).getAnswer() +
+                "\nC: " + answers.get(2).getAnswer() +
+                "\nD: " + answers.get(3).getAnswer();
     }
 }
