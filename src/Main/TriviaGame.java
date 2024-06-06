@@ -27,7 +27,7 @@ public class TriviaGame {
             System.out.println("A. Easy\nB. Medium\nC. Hard");
             boolean valid = false;
             while (!valid) {
-                switch (input.next().charAt(0)) {
+                switch (input.next().toUpperCase().charAt(0)) {
                     case 'A':
                         manager.setMaxDifficulty(EASY_DIFFICULTY_CAP);
                         valid = true;
@@ -63,10 +63,10 @@ public class TriviaGame {
             System.out.println(question);
 
             // Get the user's answer
-            char answerChar = input.next().charAt(0);
+            char answerChar = input.next().toUpperCase().charAt(0);
             while (answerChar != 'A' && answerChar != 'B' && answerChar != 'C' && answerChar != 'D') {
                 System.out.println("Invalid entry. Please try again.");
-                answerChar = input.next().charAt(0);
+                answerChar = input.next().toUpperCase().charAt(0);
             }
 
             // Determine if the answer was correct and assign a point if it was
@@ -99,9 +99,10 @@ public class TriviaGame {
     public void modify(String fileLocation) throws IOException {
         System.out.println("What modification would you like to make?");
         System.out.println("A. Add a question");
+        System.out.println("B. Quit");
 
         char inputChar;
-        while ((inputChar = input.next().charAt(0)) != 'A') {
+        while ((inputChar = input.next().toUpperCase().charAt(0)) != 'A' && inputChar != 'B') {
             System.out.println("Invalid Entry");
         }
         switch (inputChar) {
@@ -134,6 +135,9 @@ public class TriviaGame {
                 System.out.println("Storing question...");
                 manager.storeQuestion(fileLocation, new Question(question, answers, rating));
                 System.out.println("Your question has been added to the game.");
+                break;
+            default:
+                return;
         }
     }
 
@@ -143,7 +147,7 @@ public class TriviaGame {
         System.out.println("B. Toggle Timed play");
         System.out.println("C. Exit");
         char inputChar;
-        while ((inputChar = input.next().charAt(0)) != 'A' && inputChar != 'B' && inputChar != 'C') {
+        while ((inputChar = input.next().toUpperCase().charAt(0)) != 'A' && inputChar != 'B' && inputChar != 'C') {
             System.out.println("Invalid Entry");
         }
         switch (inputChar) {
