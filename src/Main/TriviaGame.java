@@ -140,10 +140,10 @@ public class TriviaGame {
     public void options() {
         System.out.println("Options menu");
         System.out.println("A. Toggle Default difficulty");
-        System.out.println("A. Toggle Timed play");
-        System.out.println("B. Exit");
+        System.out.println("B. Toggle Timed play");
+        System.out.println("C. Exit");
         char inputChar;
-        while ((inputChar = input.next().charAt(0)) != 'A' && inputChar != 'B') {
+        while ((inputChar = input.next().charAt(0)) != 'A' && inputChar != 'B' && inputChar != 'C') {
             System.out.println("Invalid Entry");
         }
         switch (inputChar) {
