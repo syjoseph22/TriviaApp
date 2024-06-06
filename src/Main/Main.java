@@ -35,15 +35,19 @@ public class Main {
 
             switch (menuOption) {
                 case 'A':
-                    game.play();
+                 case 'a':
+                     game.play();
                     break;
                 case 'B':
-                    game.modify(fileLocation);
+                 case 'b':
+                     game.modify(fileLocation);
                     break;
                 case 'C':
+                case 'c':
                     game.options();
                     break;
                 case 'D':
+                case 'd':
                     System.out.println("Thanks for playing! Goodbye.");
                     break;
                 default:
